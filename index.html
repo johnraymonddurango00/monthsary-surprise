@@ -7,9 +7,7 @@
 <title>For My Babyy ❤️</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -30,9 +28,7 @@ body {
   box-shadow: 0 8px 25px #d77b9b33;
 }
 
-h1, h2 {
-  color: #d6336c;
-}
+h1, h2 { color: #d6336c; }
 
 button {
   background: #e94d87;
@@ -45,13 +41,9 @@ button {
   margin: 8px;
 }
 
-button:hover {
-  background: #c92d69;
-}
+button:hover { background: #c92d69; }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 #gameCanvas {
   width: 100%;
@@ -106,7 +98,6 @@ input {
   line-height: 1.8;
   white-space: pre-line;
 }
-
 </style>
 </head>
 
@@ -120,7 +111,7 @@ input {
   <button onclick="startGame()">Click Me 💗</button>
 </section>
 
-<!-- HEART GAME -->
+<!-- HEART RUNNER GAME -->
 <section class="container hidden" id="game">
   <h2>❤️ Heart Runner ❤️</h2>
   <p>Jump over the obstacles, my love!</p>
@@ -128,14 +119,21 @@ input {
 
   <h2 id="score">0000 / 0100</h2>
 
-  <canvas id="gameCanvas"
-          width="500" height="200"></canvas>
+  <canvas id="gameCanvas" width="500" height="200"></canvas>
 
   <p>Press SPACE, ↑, or tap the game to jump!</p>
+
   <p id="gameStatus">Your game is ready!</p>
 
   <button id="restartBtn" class="hidden"
-          onclick="restartGame()">Try Again</button>
+          onclick="restartGame()">
+    Try Again ❤️
+  </button>
+
+  <button id="skipBtn" class="hidden"
+          onclick="skipGame()">
+    Skip Game 💗
+  </button>
 </section>
 
 <!-- SECRET CODE -->
@@ -160,6 +158,7 @@ input {
   <p>You unlocked my little world!</p>
 
   <div class="gallery">
+
     <button class="icon-button" onclick="showMusic()">
       🎵 <span>Our Music</span>
     </button>
@@ -171,19 +170,24 @@ input {
     <button class="icon-button" onclick="showMessage()">
       💌 <span>Sweet Message</span>
     </button>
+
   </div>
 
+  <!-- MUSIC -->
   <div id="music" class="hidden">
     <h2>Our Song 🎵</h2>
     <p>A song that reminds me of you.</p>
+
     <audio controls style="width:100%">
       <source src="song.mp3" type="audio/mpeg">
       Your browser does not support audio.
     </audio>
   </div>
 
+  <!-- 10 PHOTOS -->
   <div id="photos" class="hidden">
     <h2>Our Memories 📸</h2>
+
     <div class="gallery">
       <img src="photo1.jpg" alt="Memory 1">
       <img src="photo2.jpg" alt="Memory 2">
@@ -198,19 +202,22 @@ input {
     </div>
   </div>
 
+  <!-- SWEET MESSAGE -->
   <div id="letter" class="hidden">
     <h2>To My Babyy ❤️</h2>
+
     <p id="message">
-      Happy Monthsary, my lovee!
+Happy Monthsary, my lovee!
 
-      Thank you for being part of my life.
-      You make my ordinary days special.
-      I hope we continue making beautiful
-      memories together.
+Thank you for being part of my life.
+You make my ordinary days special.
+I hope we continue making beautiful
+memories together.
 
-      I love you so much, Babyy! ❤️
+I love you so much, Babyy! ❤️
     </p>
   </div>
+
 </section>
 
 <script>
@@ -218,13 +225,18 @@ input {
 // PAGE NAVIGATION
 function hideAll() {
   ["welcome", "game", "password", "surprise"]
-    .forEach(id => document.getElementById(id)
-    .classList.add("hidden"));
+    .forEach(id =>
+      document.getElementById(id).classList.add("hidden")
+    );
 }
 
 function startGame() {
   hideAll();
+
+  attempts = 0;
+
   document.getElementById("game").classList.remove("hidden");
+
   restartGame();
 }
 
@@ -238,6 +250,7 @@ let score = 0;
 let running = false;
 let lastTime = 0;
 let obstacleTimer = 0;
+let attempts = 0;
 
 const ground = 165;
 
@@ -247,8 +260,12 @@ function jump() {
   }
 }
 
+// KEYBOARD CONTROLS
 document.addEventListener("keydown", function(e) {
-  if (e.code === "Space" || e.code === "ArrowUp") {
+  if (
+    e.code === "Space" ||
+    e.code === "ArrowUp"
+  ) {
     if (!document.getElementById("game").classList.contains("hidden")) {
       e.preventDefault();
       jump();
@@ -256,9 +273,12 @@ document.addEventListener("keydown", function(e) {
   }
 });
 
+// MOBILE TAP CONTROL
 canvas.addEventListener("pointerdown", jump);
 
+// RESTART GAME
 function restartGame() {
+
   heart = { x: 55, y: 145, vy: 0 };
   obstacles = [];
   score = 0;
@@ -266,17 +286,31 @@ function restartGame() {
   lastTime = 0;
   running = true;
 
-  document.getElementById("score").textContent = "0000 / 0100";
-  document.getElementById("gameStatus").textContent = "Good luck, my love!";
-  document.getElementById("restartBtn").classList.add("hidden");
+  document.getElementById("score").textContent =
+    "0000 / 0100";
+
+  document.getElementById("gameStatus").textContent =
+    "Good luck, my love!";
+
+  document.getElementById("restartBtn")
+    .classList.add("hidden");
+
+  document.getElementById("skipBtn")
+    .classList.add("hidden");
 
   requestAnimationFrame(gameLoop);
 }
 
+// GAME LOOP
 function gameLoop(time) {
+
   if (!running) return;
 
-  const dt = Math.min((time - (lastTime || time)) / 1000, 0.04);
+  const dt = Math.min(
+    (time - (lastTime || time)) / 1000,
+    0.04
+  );
+
   lastTime = time;
 
   score += dt * 3.4;
@@ -296,23 +330,30 @@ function gameLoop(time) {
     obstacleTimer = 0;
   }
 
-  obstacles.forEach(ob => ob.x -= 230 * dt);
+  obstacles.forEach(ob => {
+    ob.x -= 230 * dt;
+  });
+
   obstacles = obstacles.filter(ob => ob.x > -30);
 
-  // Draw the game
+  // DRAW GAME
   ctx.clearRect(0, 0, 500, 200);
 
   ctx.strokeStyle = "#e99ab5";
   ctx.lineWidth = 3;
+
   ctx.beginPath();
   ctx.moveTo(0, ground + 18);
   ctx.lineTo(500, ground + 18);
   ctx.stroke();
 
+  // HEART CHARACTER
   ctx.font = "32px Arial";
   ctx.fillText("❤️", heart.x, heart.y + 25);
 
+  // OBSTACLES
   obstacles.forEach(ob => {
+
     ctx.font = "30px Arial";
     ctx.fillText("🌵", ob.x, ground + 15);
 
@@ -323,70 +364,140 @@ function gameLoop(time) {
     ) {
       endGame();
     }
+
   });
 
+  // SCORE
   document.getElementById("score").textContent =
-    String(Math.floor(score)).padStart(4, "0") + " / 0100";
+    String(Math.floor(score)).padStart(4, "0") +
+    " / 0100";
 
+  // WINNING CONDITION
   if (score >= 100) {
+
     running = false;
+
     document.getElementById("gameStatus").textContent =
       "You complete the game my Babyy ❤️";
 
     setTimeout(() => {
+
       hideAll();
-      document.getElementById("password").classList.remove("hidden");
+
+      document.getElementById("password")
+        .classList.remove("hidden");
+
     }, 1800);
 
     return;
   }
 
-  if (running) requestAnimationFrame(gameLoop);
+  if (running) {
+    requestAnimationFrame(gameLoop);
+  }
 }
 
+// GAME OVER AND ATTEMPT COUNTER
 function endGame() {
+
   running = false;
+  attempts++;
+
   document.getElementById("gameStatus").textContent =
     "Oops! Try again, my love! ❤️";
-  document.getElementById("restartBtn").classList.remove("hidden");
+
+  document.getElementById("restartBtn")
+    .classList.remove("hidden");
+
+  if (attempts >= 3) {
+
+    document.getElementById("gameStatus").textContent =
+      "You've tried 3 times, my Babyy! 💗";
+
+    document.getElementById("skipBtn")
+      .classList.remove("hidden");
+
+  }
+
+}
+
+// SKIP GAME AFTER 3 FAILURES
+function skipGame() {
+
+  running = false;
+
+  hideAll();
+
+  document.getElementById("password")
+    .classList.remove("hidden");
+
 }
 
 // SECRET PASSWORD
 function unlock() {
-  const code = document.getElementById("secret").value;
+
+  const code =
+    document.getElementById("secret").value;
 
   if (code === "04092026") {
+
     hideAll();
-    document.getElementById("surprise").classList.remove("hidden");
+
+    document.getElementById("surprise")
+      .classList.remove("hidden");
+
+    document.getElementById("error").textContent = "";
+
   } else {
+
     document.getElementById("error").textContent =
       "Wrong code, Babyy! Try again. 💗";
+
   }
+
 }
 
 // THREE SURPRISE ICONS
 function showMusic() {
+
   hideSections();
-  document.getElementById("music").classList.remove("hidden");
+
+  document.getElementById("music")
+    .classList.remove("hidden");
+
 }
 
 function showPhotos() {
+
   hideSections();
-  document.getElementById("photos").classList.remove("hidden");
+
+  document.getElementById("photos")
+    .classList.remove("hidden");
+
 }
 
 function showMessage() {
+
   hideSections();
-  document.getElementById("letter").classList.remove("hidden");
+
+  document.getElementById("letter")
+    .classList.remove("hidden");
+
 }
 
+// HIDE SURPRISE SECTIONS
 function hideSections() {
-  ["music", "photos", "letter"].forEach(id =>
-    document.getElementById(id).classList.add("hidden")
-  );
+
+  ["music", "photos", "letter"].forEach(id => {
+
+    document.getElementById(id)
+      .classList.add("hidden");
+
+  });
+
 }
 
 </script>
+
 </body>
 </html>
-
