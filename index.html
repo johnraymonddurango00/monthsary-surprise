@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Babyy ❤️</title>
+<title>For My Babyy Lissa ❤️</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -18,29 +18,33 @@
 
 body {
   margin: 0;
-  font-family: Georgia, serif;
-  background: linear-gradient(135deg, #ffe0ec, #fff5f8);
-  color: var(--text-pink);
-  text-align: center;
-  min-height: 100vh;
   padding: 25px 15px;
+  min-height: 100vh;
+  font-family: Georgia, serif;
+  text-align: center;
+  color: var(--text-pink);
+  background: linear-gradient(135deg,#ffe0ec,#fff5f8);
   transition: background 1.2s ease;
 }
 
 body.affection-theme {
-  background: linear-gradient(135deg, #ffd6e7, #ffe9f1, #fff0f5);
+  background: linear-gradient(135deg,#ffd6e7,#ffe9f1,#fff0f5);
+}
+
+body.kiss-theme {
+  background: linear-gradient(135deg,#ffc6dc,#ffe0ec,#fff0f5);
 }
 
 .container {
   max-width: 600px;
   margin: 35px auto;
-  background: white;
   padding: 30px 20px;
+  background: white;
   border-radius: 25px;
   box-shadow: 0 8px 25px #d77b9b33;
 }
 
-h1, h2 { color: var(--dark-pink); }
+h1,h2 { color: var(--dark-pink); }
 
 button {
   background: var(--pink);
@@ -51,7 +55,7 @@ button {
   font-size: 16px;
   cursor: pointer;
   margin: 8px;
-  transition: transform .2s, opacity .2s, background .2s;
+  transition: transform .2s, background .2s;
 }
 
 button:hover:not(:disabled) {
@@ -66,7 +70,7 @@ button:disabled {
 
 .hidden { display: none !important; }
 
-input, textarea {
+input,textarea {
   padding: 13px;
   border: 2px solid pink;
   border-radius: 10px;
@@ -75,18 +79,18 @@ input, textarea {
   width: 100%;
   max-width: 400px;
   color: #a83260;
-  font-family: Georgia, serif;
+  font-family: Georgia,serif;
 }
 
 textarea {
-  min-height: 95px;
+  min-height: 100px;
   resize: vertical;
   text-align: left;
-  letter-spacing: normal;
+  line-height: 1.6;
 }
 
 #countdown {
-  font-size: clamp(32px, 9vw, 48px);
+  font-size: clamp(32px,9vw,48px);
   font-weight: bold;
   letter-spacing: 3px;
   color: var(--dark-pink);
@@ -94,7 +98,7 @@ textarea {
   font-variant-numeric: tabular-nums;
 }
 
-.countdown-note {
+.countdown-note,.skip-countdown {
   background: #fff0f5;
   border: 1px solid #ffc0d5;
   border-radius: 16px;
@@ -102,11 +106,10 @@ textarea {
   margin: 18px 0;
 }
 
-.skip-countdown {
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px dashed #f3a1bd;
-  border-radius: 16px;
+#waitingMusic {
+  width: 100%;
+  max-width: 400px;
+  margin: 15px auto;
 }
 
 #gameCanvas {
@@ -120,7 +123,7 @@ textarea {
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2,1fr);
   gap: 10px;
   margin-top: 20px;
 }
@@ -154,9 +157,9 @@ textarea {
   margin-top: 8px;
 }
 
-#music {
+#music,#photos,#letter {
   margin-top: 25px;
-  padding: 15px;
+  padding: 18px;
   background: #fff0f5;
   border-radius: 18px;
 }
@@ -167,13 +170,10 @@ textarea {
 }
 
 #letter {
-  margin-top: 25px;
-  padding: 20px;
-  background: linear-gradient(135deg, #fff0f5, #ffe0ec);
+  background: linear-gradient(135deg,#fff0f5,#ffe0ec);
   border: 1px solid #ffc0d5;
-  border-radius: 18px;
   text-align: left;
-  animation: fadeIn 1.2s ease;
+  overflow-wrap: anywhere;
 }
 
 #letter h2 { text-align: center; }
@@ -181,6 +181,8 @@ textarea {
 #message {
   line-height: 1.9;
   font-size: 15px;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 #message p { margin-bottom: 18px; }
@@ -213,7 +215,7 @@ textarea {
   margin-top: 24px;
   padding: 22px 16px;
   border-radius: 20px;
-  background: linear-gradient(145deg, #fff4f8, #ffe5ef);
+  background: linear-gradient(145deg,#fff4f8,#ffe5ef);
   border: 1px solid #ffc0d5;
   box-shadow: 0 8px 22px #d77b9b22;
   animation: fadeIn .45s ease;
@@ -266,7 +268,30 @@ textarea {
   accent-color: #e94d87;
 }
 
-#hugProgress, #kissProgress {
+.emoji-choice {
+  display: inline-block;
+  font-size: 34px;
+  padding: 10px;
+  margin: 5px;
+  background: white;
+  border: 2px solid #ffc0d5;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.emoji-choice.selected {
+  background: #f7c2d7;
+  border-color: #d6336c;
+  transform: scale(1.1);
+}
+
+.affection-button {
+  font-size: 32px;
+  padding: 18px;
+  min-width: 150px;
+}
+
+#hugProgress,#kissProgress {
   font-weight: bold;
   color: #d6336c;
   font-size: 20px;
@@ -299,12 +324,19 @@ textarea {
   font-size: 13px;
 }
 
+.final-text {
+  font-size: 22px;
+  line-height: 1.6;
+  color: #d6336c;
+  font-weight: bold;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 400px) {
+@media(max-width:400px) {
   .container { padding: 22px 14px; }
   .gallery img { height: 145px; }
   #message { font-size: 14px; }
@@ -333,6 +365,12 @@ textarea {
   <p>I have a little surprise for you, Babyy.</p>
   <p>Are you ready?</p>
 
+  <h2>Listen while waiting 🎵</h2>
+  <audio id="waitingMusic" controls loop preload="metadata">
+    <source src="./waiting.mp3" type="audio/mpeg">
+    Your browser does not support audio.
+  </audio>
+
   <button id="startButton" onclick="startGame()" disabled>
     Click Me 💗
   </button>
@@ -347,13 +385,10 @@ textarea {
 
     <br>
 
-    <button onclick="skipCountdown()">
-      Skip Countdown
-    </button>
+    <button onclick="skipCountdown()">Skip Countdown</button>
 
     <p id="countdownError" aria-live="polite"></p>
   </div>
-
 </section>
 
 <!-- HEART RUNNER GAME -->
@@ -370,16 +405,13 @@ textarea {
   <p>Press SPACE, ↑, or tap the game to jump!</p>
   <p id="gameStatus">Your game is ready!</p>
 
-  <button id="restartBtn" class="hidden"
-    onclick="restartGame()">
+  <button id="restartBtn" class="hidden" onclick="restartGame()">
     Try Again ❤️
   </button>
 
-  <button id="skipBtn" class="hidden"
-    onclick="skipGame()">
+  <button id="skipBtn" class="hidden" onclick="skipGame()">
     Skip Game 💗
   </button>
-
 </section>
 
 <!-- SECRET CODE -->
@@ -399,7 +431,6 @@ textarea {
   <button onclick="unlock()">Unlock ❤️</button>
 
   <p id="error" aria-live="polite"></p>
-
 </section>
 
 <!-- SURPRISE MENU -->
@@ -407,7 +438,6 @@ textarea {
 
   <h1>Welcome, my Babyy! 💗</h1>
   <p>You unlocked my little world!</p>
-
   <p>Visit all three surprises to unlock your 10 special cards. 🥰</p>
 
   <div class="gallery">
@@ -430,9 +460,7 @@ textarea {
     Visited: 0 / 3 surprises
   </div>
 
-  <button id="unlockCardsBtn"
-    class="hidden"
-    onclick="beginCards()">
+  <button id="unlockCardsBtn" class="hidden" onclick="beginCards()">
     Open Your 10 Special Cards 💝
   </button>
 
@@ -442,25 +470,14 @@ textarea {
     <h2>Our Song 🎵</h2>
     <p>A song that reminds me of you.</p>
 
-    <audio id="ourSong"
-      controls
-      preload="metadata"
-      style="width:100%; max-width:400px;">
-
+    <audio id="ourSong" controls loop preload="metadata">
       <source src="./song.mp3" type="audio/mpeg">
-
       Your browser does not support HTML5 audio.
-
     </audio>
 
-    <p style="font-size:12px;">
-      Play our song and enjoy this little moment. ❤️
-    </p>
+    <p>Play our song and enjoy this little moment. ❤️</p>
 
-    <button onclick="hideSections()">
-      Back to Menu 💗
-    </button>
-
+    <button onclick="hideSections()">Back to Menu 💗</button>
   </div>
 
   <!-- PHOTOS -->
@@ -481,16 +498,13 @@ textarea {
       <img src="photo10.jpg" alt="Memory 10">
     </div>
 
-    <button onclick="hideSections()">
-      Back to Menu 💗
-    </button>
-
+    <button onclick="hideSections()">Back to Menu 💗</button>
   </div>
 
   <!-- SWEET MESSAGE -->
   <div id="letter" class="hidden">
 
-    <h2>To My Babyy Lissa ❤️</h2>
+    <h2>To My Babyy Lissa Ko ❤️</h2>
 
     <div id="message">
 
@@ -579,15 +593,12 @@ textarea {
 
     </div>
 
-    <button onclick="hideSections()">
-      Back to Menu 💗
-    </button>
-
+    <button onclick="hideSections()">Back to Menu 💗</button>
   </div>
 
 </section>
 
-<!-- 10 SPECIAL CARDS -->
+<!-- TEN SPECIAL CARDS -->
 <section class="container hidden" id="cardsPage">
 
   <h1>10 Little Things For You 💝</h1>
@@ -595,9 +606,7 @@ textarea {
 
   <div id="challengeCard">
 
-    <p class="progress-text" id="cardProgress">
-      Card 1 of 10
-    </p>
+    <p class="progress-text" id="cardProgress">Card 1 of 10</p>
 
     <h2 id="challengeTitle"></h2>
 
@@ -605,11 +614,62 @@ textarea {
 
     <p id="cardFeedback" aria-live="polite"></p>
 
-    <button id="nextCardBtn"
-      class="hidden"
-      onclick="nextCard()">
+    <button id="nextCardBtn" class="hidden" onclick="nextCard()">
       Next Card 💗
     </button>
+
+  </div>
+</section>
+
+<!-- FINAL GIFT -->
+<section class="container hidden" id="finalPage">
+
+  <div id="finalQuestion">
+
+    <h1>Are you ready for the last na pasabog? 🥺❤️</h1>
+    <p>Are you ready, Babyy?</p>
+
+    <button onclick="finalYes()">YES! 💗</button>
+
+  </div>
+
+  <div id="giftIntroduction" class="hidden">
+
+    <h1>This is my surprise gift for you, my Babyy Lissa! ❤️</h1>
+    <p>I prepared something special just for you.</p>
+
+    <button onclick="showGift()">Show me! 🎁</button>
+
+  </div>
+
+  <div id="giftReveal" class="hidden">
+
+    <h1>Surprise, my love! 🥰</h1>
+
+    <img id="giftImage" src="./gift.jpg" alt="Your surprise gift">
+
+    <p class="final-text">CLAIM ME! 🎁💗</p>
+
+    <p>I love you so much, Babyy Lissa ko! ❤️</p>
+
+    <button onclick="claimGift()">Claim my gift 💗</button>
+
+  </div>
+
+  <div id="giftClaimed" class="hidden">
+
+    <h1>Happy 7th Monthsary, Babyy! ❤️</h1>
+
+    <p class="final-text">
+      You are my greatest gift. 🥰
+    </p>
+
+    <p>
+      Thank you for being mine.
+      I will always choose you.
+    </p>
+
+    <h1> I LOVE YOU SO MUCH! 💋❤️</h1>
 
   </div>
 
@@ -621,14 +681,11 @@ textarea {
 // 1. COUNTDOWN - PHILIPPINE TIME
 // ====================================
 
-// November 9, 2026 at 7:00 PM Philippine time.
-// Philippines is UTC+8, so this is 11:00 AM UTC.
-
-const targetTime = Date.UTC(2026, 10, 9, 11, 0, 0);
+const targetTime = Date.UTC(2026,10,9,11,0,0);
 
 let countdownTimer = null;
-let countdownSkipped = false;
 let countdownUnlocked = false;
+let countdownSkipped = false;
 
 function updateCountdown() {
 
@@ -660,14 +717,16 @@ function updateCountdown() {
 
   const totalSeconds = Math.floor(remaining / 1000);
 
-  const hours = Math.floor(totalSeconds / 3600);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
 
   countdown.textContent =
-    String(hours).padStart(2, "0") + ":" +
-    String(minutes).padStart(2, "0") + ":" +
-    String(seconds).padStart(2, "0");
+    days + "d " +
+    String(hours).padStart(2,"0") + ":" +
+    String(minutes).padStart(2,"0") + ":" +
+    String(seconds).padStart(2,"0");
 
   startButton.disabled = true;
 }
@@ -690,8 +749,7 @@ function skipCountdown() {
       countdownTimer = null;
     }
 
-    document.getElementById("countdown").textContent =
-      "SKIPPED 💗";
+    document.getElementById("countdown").textContent = "SKIPPED 💗";
 
     document.getElementById("countdownStatus").textContent =
       "Countdown skipped. Your surprise is ready!";
@@ -712,40 +770,42 @@ function skipCountdown() {
 }
 
 updateCountdown();
-
-if (!countdownUnlocked) {
-  countdownTimer = setInterval(updateCountdown, 1000);
-}
+countdownTimer = setInterval(updateCountdown,1000);
 
 // ====================================
 // 2. PAGE NAVIGATION
 // ====================================
 
+const pageIds = [
+  "welcome",
+  "game",
+  "password",
+  "surprise",
+  "cardsPage",
+  "finalPage"
+];
+
 function hideAll() {
 
-  [
-    "welcome",
-    "game",
-    "password",
-    "surprise",
-    "cardsPage"
-  ].forEach(id => {
+  pageIds.forEach(id => {
     document.getElementById(id).classList.add("hidden");
   });
 
   hideSections();
 }
 
+function showPage(id) {
+  hideAll();
+  document.getElementById(id).classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
 function startGame() {
 
   if (!countdownUnlocked) return;
 
-  hideAll();
-
+  showPage("game");
   attempts = 0;
-
-  document.getElementById("game").classList.remove("hidden");
-
   restartGame();
 }
 
@@ -756,7 +816,7 @@ function startGame() {
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let heart = { x: 55, y: 145, vy: 0 };
+let heart = {x:55,y:145,vy:0};
 let obstacles = [];
 let score = 0;
 let running = false;
@@ -767,62 +827,50 @@ let attempts = 0;
 const ground = 165;
 
 function jump() {
-
   if (running && heart.y >= 144) {
     heart.vy = -390;
   }
-
 }
 
-document.addEventListener("keydown", function(e) {
+document.addEventListener("keydown",function(e) {
 
-  if (e.code === "Space" || e.code === "ArrowUp") {
-
+  if (
+    e.code === "Space" ||
+    e.code === "ArrowUp"
+  ) {
     if (!document.getElementById("game").classList.contains("hidden")) {
       e.preventDefault();
       jump();
     }
-
   }
 
 });
 
-canvas.addEventListener("pointerdown", jump);
+canvas.addEventListener("pointerdown",jump);
 
 function restartGame() {
 
-  heart = { x: 55, y: 145, vy: 0 };
+  heart = {x:55,y:145,vy:0};
   obstacles = [];
   score = 0;
   obstacleTimer = 0;
   lastTime = 0;
   running = true;
 
-  document.getElementById("score").textContent =
-    "0000 / 0100";
+  document.getElementById("score").textContent = "0000 / 0100";
+  document.getElementById("gameStatus").textContent = "Good luck, my love! ❤️";
 
-  document.getElementById("gameStatus").textContent =
-    "Good luck, my love!";
-
-  document.getElementById("restartBtn")
-    .classList.add("hidden");
-
-  document.getElementById("skipBtn")
-    .classList.add("hidden");
+  document.getElementById("restartBtn").classList.add("hidden");
+  document.getElementById("skipBtn").classList.add("hidden");
 
   requestAnimationFrame(gameLoop);
-
 }
 
 function gameLoop(time) {
 
   if (!running) return;
 
-  const dt = Math.min(
-    (time - (lastTime || time)) / 1000,
-    0.04
-  );
-
+  const dt = Math.min((time-(lastTime || time))/1000,0.04);
   lastTime = time;
 
   score += dt * 3.4;
@@ -838,7 +886,7 @@ function gameLoop(time) {
   obstacleTimer += dt;
 
   if (obstacleTimer > 1.15) {
-    obstacles.push({ x: 510 });
+    obstacles.push({x:510});
     obstacleTimer = 0;
   }
 
@@ -848,38 +896,36 @@ function gameLoop(time) {
 
   obstacles = obstacles.filter(ob => ob.x > -30);
 
-  ctx.clearRect(0, 0, 500, 200);
+  ctx.clearRect(0,0,500,200);
 
   ctx.strokeStyle = "#e99ab5";
   ctx.lineWidth = 3;
 
   ctx.beginPath();
-  ctx.moveTo(0, ground + 18);
-  ctx.lineTo(500, ground + 18);
+  ctx.moveTo(0,ground+18);
+  ctx.lineTo(500,ground+18);
   ctx.stroke();
 
   ctx.font = "32px Arial";
-  ctx.fillText("❤️", heart.x, heart.y + 25);
+  ctx.fillText("❤️",heart.x,heart.y+25);
 
   for (const ob of obstacles) {
 
     ctx.font = "30px Arial";
-    ctx.fillText("🌵", ob.x, ground + 15);
+    ctx.fillText("🌵",ob.x,ground+15);
 
     if (
-      ob.x < heart.x + 27 &&
-      ob.x + 25 > heart.x &&
+      ob.x < heart.x+27 &&
+      ob.x+25 > heart.x &&
       heart.y > 112
     ) {
       endGame();
       return;
     }
-
   }
 
   document.getElementById("score").textContent =
-    String(Math.floor(score)).padStart(4, "0") +
-    " / 0100";
+    String(Math.floor(score)).padStart(4,"0") + " / 0100";
 
   if (score >= 100) {
 
@@ -889,21 +935,13 @@ function gameLoop(time) {
       "You completed the game, my Babyy! ❤️";
 
     setTimeout(() => {
-
-      hideAll();
-
-      document.getElementById("password")
-        .classList.remove("hidden");
-
-    }, 1800);
+      showPage("password");
+    },1800);
 
     return;
   }
 
-  if (running) {
-    requestAnimationFrame(gameLoop);
-  }
-
+  if (running) requestAnimationFrame(gameLoop);
 }
 
 function endGame() {
@@ -914,30 +952,20 @@ function endGame() {
   document.getElementById("gameStatus").textContent =
     "Oops! Try again, my love! ❤️";
 
-  document.getElementById("restartBtn")
-    .classList.remove("hidden");
+  document.getElementById("restartBtn").classList.remove("hidden");
 
   if (attempts >= 3) {
 
     document.getElementById("gameStatus").textContent =
       "You've tried 3 times, my Babyy! 💗";
 
-    document.getElementById("skipBtn")
-      .classList.remove("hidden");
-
+    document.getElementById("skipBtn").classList.remove("hidden");
   }
-
 }
 
 function skipGame() {
-
   running = false;
-
-  hideAll();
-
-  document.getElementById("password")
-    .classList.remove("hidden");
-
+  showPage("password");
 }
 
 // ====================================
@@ -946,18 +974,12 @@ function skipGame() {
 
 function unlock() {
 
-  const code =
-    document.getElementById("secret").value;
+  const code = document.getElementById("secret").value;
 
   if (code === "04092026") {
 
-    hideAll();
-
-    document.getElementById("surprise")
-      .classList.remove("hidden");
-
+    showPage("surprise");
     document.getElementById("error").textContent = "";
-
     updateVisitedStatus();
 
   } else {
@@ -966,7 +988,6 @@ function unlock() {
       "Wrong code, Babyy! Try again. 💗";
 
   }
-
 }
 
 // ====================================
@@ -976,11 +997,8 @@ function unlock() {
 const visitedSections = new Set();
 
 function markVisited(section) {
-
   visitedSections.add(section);
-
   updateVisitedStatus();
-
 }
 
 function updateVisitedStatus() {
@@ -992,66 +1010,47 @@ function updateVisitedStatus() {
     (count === 3 ? " — You unlocked the cards! 💝" : "");
 
   document.getElementById("unlockCardsBtn")
-    .classList.toggle("hidden", count !== 3);
-
+    .classList.toggle("hidden",count !== 3);
 }
 
 function showMusic() {
 
   markVisited("music");
-
   hideSections();
 
-  document.getElementById("music")
-    .classList.remove("hidden");
-
+  document.getElementById("music").classList.remove("hidden");
 }
 
 function showPhotos() {
 
   markVisited("photos");
-
   hideSections();
 
-  document.getElementById("photos")
-    .classList.remove("hidden");
-
+  document.getElementById("photos").classList.remove("hidden");
 }
 
 function showMessage() {
 
   markVisited("letter");
-
   hideSections();
 
-  document.getElementById("letter")
-    .classList.remove("hidden");
-
+  document.getElementById("letter").classList.remove("hidden");
 }
 
 function hideSections() {
 
   const song = document.getElementById("ourSong");
 
-  if (song) {
-    song.pause();
-  }
+  if (song) song.pause();
 
-  ["music", "photos", "letter"].forEach(id => {
-
-    document.getElementById(id)
-      .classList.add("hidden");
-
+  ["music","photos","letter"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
   });
-
 }
 
 // ====================================
 // 6. TEN SPECIAL CARDS - FIXED ORDER
 // ====================================
-
-// DO NOT SHUFFLE THESE CARDS.
-// THEY WILL ALWAYS FOLLOW 1 TO 10.
 
 const cardTypes = [
   "happiness",
@@ -1061,43 +1060,32 @@ const cardTypes = [
   "loveWord",
   "hug",
   "kiss",
-  "ready",
-  "sure",
-  "gift"
+  "emojis",
+  "excited",
+  "message"
 ];
 
-let cardOrder = [...cardTypes];
-
 let currentCardIndex = 0;
-
 let hugClicks = 0;
 let kissClicks = 0;
-
 let selectedColors = [];
+let selectedEmojis = [];
 
 function beginCards() {
 
-  // All three unique icons must be visited first.
   if (visitedSections.size !== 3) return;
 
-  hideAll();
-
-  document.getElementById("cardsPage")
-    .classList.remove("hidden");
-
-  // Fixed sequence, no random order.
-  cardOrder = [...cardTypes];
+  showPage("cardsPage");
 
   currentCardIndex = 0;
-
   hugClicks = 0;
   kissClicks = 0;
   selectedColors = [];
+  selectedEmojis = [];
 
-  document.body.classList.remove("affection-theme");
+  document.body.classList.remove("affection-theme","kiss-theme");
 
   renderCard();
-
 }
 
 // ====================================
@@ -1106,7 +1094,7 @@ function beginCards() {
 
 function renderCard() {
 
-  const type = cardOrder[currentCardIndex];
+  const type = cardTypes[currentCardIndex];
 
   const title = document.getElementById("challengeTitle");
   const body = document.getElementById("challengeBody");
@@ -1114,32 +1102,28 @@ function renderCard() {
   const next = document.getElementById("nextCardBtn");
 
   document.getElementById("cardProgress").textContent =
-    "Card " + (currentCardIndex + 1) + " of 10";
+    "Card " + (currentCardIndex+1) + " of 10";
 
   feedback.textContent = "";
-
   next.classList.add("hidden");
-
   body.innerHTML = "";
 
   // CARD 1
   if (type === "happiness") {
 
-    title.textContent =
-      "In scale of 1–10, gaano ka masaya? 🥰";
+    title.textContent = "In scale of 1–10, gaano ka masaya? 🥰";
 
     body.innerHTML = `
-      <p>You can type anything you want, Babyy. ❤️</p>
+      <p>You have the freedom to type anything you want, Babyy. ❤️</p>
 
       <textarea id="happinessAnswer"
-        maxlength="500"
+        maxlength="1000"
         placeholder="Your answer..."></textarea>
 
       <button onclick="completeTextCard('happinessAnswer')">
         Submit Answer 💗
       </button>
     `;
-
   }
 
   // CARD 2
@@ -1149,89 +1133,73 @@ function renderCard() {
 
     body.innerHTML = `
       <div class="choice-list">
-
-        <button class="choice-button"
-          onclick="chooseOne(this)">
+        <button class="choice-button" onclick="chooseOne(this)">
           Yes ❤️
         </button>
 
-        <button class="choice-button"
-          onclick="chooseOne(this)">
+        <button class="choice-button" onclick="chooseOne(this)">
           No 😂
         </button>
-
       </div>
     `;
-
   }
 
   // CARD 3
   else if (type === "hiddenMessage") {
 
-    title.textContent =
-      "Para sa'yo ito, click mo ako baby hehe 💌";
+    title.textContent = "Para sa'yo ito, click mo ako baby hehe 💌";
 
     body.innerHTML = `
+      <p>May special message ako para sa'yo.</p>
+
       <button onclick="revealHiddenMessage()">
-        Click to reveal your message 💗
+        Click me, baby! 💗
       </button>
 
-      <p id="hiddenLoveMessage"
-        class="hidden"
+      <p id="hiddenLoveMessage" class="hidden"
         style="font-size:21px;color:#d6336c;font-weight:bold;">
 
         You're My beautiful Babyy wifeyy lissa
-        😍😍😍😍😍😍😍😍
+        😍😍😍😍😍😍😍😍😍😍
 
       </p>
     `;
-
   }
 
   // CARD 4
   else if (type === "colors") {
 
-    title.textContent =
-      "Choose 2 colours what you want! 🎨";
+    selectedColors = [];
+
+    title.textContent = "Choose 2 colours what you want! 🎨";
 
     body.innerHTML = `
       <p>Select exactly TWO colours.</p>
 
       <div>
-
         <label class="color-choice">
-          <input type="checkbox"
-            value="Green"
-            onchange="toggleColor(this)">
+          <input type="checkbox" value="Green" onchange="toggleColor(this)">
           Green 💚
         </label>
 
         <label class="color-choice">
-          <input type="checkbox"
-            value="Pink"
-            onchange="toggleColor(this)">
+          <input type="checkbox" value="Pink" onchange="toggleColor(this)">
           Pink 💗
         </label>
 
         <label class="color-choice">
-          <input type="checkbox"
-            value="Blue"
-            onchange="toggleColor(this)">
+          <input type="checkbox" value="Blue" onchange="toggleColor(this)">
           Blue 💙
         </label>
 
         <label class="color-choice">
-          <input type="checkbox"
-            value="Red"
-            onchange="toggleColor(this)">
+          <input type="checkbox" value="Red" onchange="toggleColor(this)">
           Red ❤️
         </label>
-
       </div>
 
       <p id="colorCount">0 / 2 selected</p>
     `;
-
   }
 
   // CARD 5
@@ -1252,11 +1220,8 @@ function renderCard() {
 
       <br>
 
-      <button onclick="checkLoveWord()">
-        Submit Answer 💗
-      </button>
+      <button onclick="checkLoveWord()">Submit Answer 💗</button>
     `;
-
   }
 
   // CARD 6
@@ -1264,24 +1229,19 @@ function renderCard() {
 
     hugClicks = 0;
 
-    title.textContent =
-      "Click me, we will hug together 🫂";
+    title.textContent = "Click me, we will hug together 🫂";
 
     body.innerHTML = `
       <p>Give me 10 hugs, Babyy!</p>
 
-      <button style="font-size:30px;"
-        onclick="countAffection('hug')">
+      <button class="affection-button" onclick="countAffection('hug')">
         🫂🫂🫂
       </button>
 
       <p id="hugProgress">0 / 10 hugs</p>
 
-      <p id="hugNote">
-        Sending you warm hugs! ❤️
-      </p>
+      <p id="hugNote">Sending you warm hugs! ❤️</p>
     `;
-
   }
 
   // CARD 7
@@ -1289,101 +1249,79 @@ function renderCard() {
 
     kissClicks = 0;
 
-    title.textContent =
-      "Click me, we will kiss together 💋";
+    title.textContent = "Click me, we will kiss together 💋";
 
     body.innerHTML = `
       <p>Give me 10 kisses, Babyy!</p>
 
-      <button style="font-size:30px;"
-        onclick="countAffection('kiss')">
+      <button class="affection-button" onclick="countAffection('kiss')">
         💋💋💋
       </button>
 
       <p id="kissProgress">0 / 10 kisses</p>
 
-      <p id="kissNote">
-        Sending you kisses! ❤️
-      </p>
+      <p id="kissNote">Sending you kisses! ❤️</p>
     `;
-
   }
 
   // CARD 8
-  else if (type === "ready") {
+  else if (type === "emojis") {
 
-    title.textContent = "Are you ready? 💝";
+    selectedEmojis = [];
+
+    title.textContent = "Choose any emoji, baby! 🥰";
 
     body.innerHTML = `
-      <div class="choice-list">
+      <p>You can choose all four or any combination!</p>
 
-        <button class="choice-button"
-          onclick="chooseOne(this)">
-          Yes! 🥰
-        </button>
-
-        <button class="choice-button"
-          onclick="chooseOne(this)">
-          No 🙈
-        </button>
-
+      <div>
+        <button class="emoji-choice" onclick="toggleEmoji(this,'😻')">😻</button>
+        <button class="emoji-choice" onclick="toggleEmoji(this,'🥰')">🥰</button>
+        <button class="emoji-choice" onclick="toggleEmoji(this,'😍')">😍</button>
+        <button class="emoji-choice" onclick="toggleEmoji(this,'🥺')">🥺</button>
       </div>
-    `;
 
+      <p id="emojiCount">Selected: 0</p>
+
+      <button onclick="submitEmojis()">Confirm Emojis 💗</button>
+    `;
   }
 
   // CARD 9
-  else if (type === "sure") {
+  else if (type === "excited") {
 
-    title.textContent = "Are you sure? 👀";
+    title.textContent = "Excited kana sa bibigay kong gift? 🎁";
 
     body.innerHTML = `
       <div class="choice-list">
-
-        <button class="choice-button"
-          onclick="chooseOne(this)">
-          Yes! ❤️
+        <button class="choice-button" onclick="chooseOne(this)">
+          Yes! 😍
         </button>
 
-        <button class="choice-button"
-          onclick="chooseOne(this)">
-          No 😅
+        <button class="choice-button" onclick="chooseOne(this)">
+          No 🙈
         </button>
-
       </div>
     `;
-
   }
 
   // CARD 10
-  else if (type === "gift") {
+  else if (type === "message") {
 
-    title.textContent =
-      "Here's your gift, come and claim it! 🎁";
+    title.textContent = "Meron ka bang gustong sabihin baby ko? 💗";
 
     body.innerHTML = `
-      <p>A special gift made with love, just for you.</p>
+      <p>Tell me anything you want to say, Babyy.</p>
 
-      <img id="giftImage"
-        src="./gift.jpg"
-        alt="Your monthsary gift">
+      <textarea id="personalMessage"
+        maxlength="2000"
+        placeholder="Write your message here..."></textarea>
 
-      <p>I hope this makes you smile, my Babyy. ❤️</p>
-
-      <button onclick="completeCard()">
-        I love my gift! 💗
+      <button onclick="submitPersonalMessage()">
+        Send My Message ❤️
       </button>
     `;
-
-    document.getElementById("giftImage").onerror = function() {
-      this.style.display = "none";
-
-      document.getElementById("cardFeedback").textContent =
-        "Please upload your gift picture as gift.jpg to GitHub.";
-    };
-
   }
-
 }
 
 // ====================================
@@ -1391,19 +1329,8 @@ function renderCard() {
 // ====================================
 
 function showNextButton() {
-
-  document.getElementById("nextCardBtn")
-    .classList.remove("hidden");
-
+  document.getElementById("nextCardBtn").classList.remove("hidden");
 }
-
-function completeCard() {
-
-  showNextButton();
-
-}
-
-// CARD 1: FREE TEXT ANSWER
 
 function completeTextCard(inputId) {
 
@@ -1421,19 +1348,15 @@ function completeTextCard(inputId) {
     "Thank you for sharing with me! ❤️";
 
   showNextButton();
-
 }
 
-// CARD 2, 8 AND 9: YES OR NO
+// CARD 2 AND 9: YES OR NO
 
 function chooseOne(button) {
 
-  const buttons =
-    button.parentElement.querySelectorAll("button");
+  const buttons = button.parentElement.querySelectorAll("button");
 
-  buttons.forEach(item => {
-    item.classList.remove("selected");
-  });
+  buttons.forEach(item => item.classList.remove("selected"));
 
   button.classList.add("selected");
 
@@ -1441,10 +1364,9 @@ function chooseOne(button) {
     "Your answer: " + button.textContent;
 
   showNextButton();
-
 }
 
-// CARD 3: HIDDEN LOVE MESSAGE
+// CARD 3: HIDDEN MESSAGE
 
 function revealHiddenMessage() {
 
@@ -1455,10 +1377,9 @@ function revealHiddenMessage() {
     "A message made just for you. ❤️";
 
   showNextButton();
-
 }
 
-// CARD 4: CHOOSE EXACTLY TWO COLOURS
+// CARD 4: TWO COLOURS
 
 function toggleColor(checkbox) {
 
@@ -1473,15 +1394,11 @@ function toggleColor(checkbox) {
   }
 
   if (checkbox.checked) {
-
     selectedColors.push(checkbox.value);
-
   } else {
-
     selectedColors = selectedColors.filter(
       color => color !== checkbox.value
     );
-
   }
 
   document.getElementById("colorCount").textContent =
@@ -1496,20 +1413,17 @@ function toggleColor(checkbox) {
 
   } else {
 
-    document.getElementById("nextCardBtn")
-      .classList.add("hidden");
+    document.getElementById("nextCardBtn").classList.add("hidden");
 
   }
-
 }
 
-// CARD 5: COMPLETE THE LOVE WORD
+// CARD 5: LOVE WORD
 
 function checkLoveWord() {
 
-  const answer =
-    document.getElementById("loveWordAnswer")
-      .value.trim().toLowerCase();
+  const answer = document.getElementById("loveWordAnswer")
+    .value.trim().toLowerCase();
 
   if (answer === "love") {
 
@@ -1524,18 +1438,17 @@ function checkLoveWord() {
       "Try again, Babyy. Hint: I ____ you so much. 💗";
 
   }
-
 }
 
-// CARD 6 AND 7: HUG AND KISS COUNTERS
+// CARD 6 AND 7: HUGS AND KISSES
 
 function countAffection(type) {
 
-  document.body.classList.add("affection-theme");
-
   if (type === "hug") {
 
-    hugClicks = Math.min(hugClicks + 1, 10);
+    hugClicks = Math.min(hugClicks+1,10);
+
+    document.body.classList.add("affection-theme");
 
     document.getElementById("hugProgress").textContent =
       hugClicks + " / 10 hugs";
@@ -1546,12 +1459,17 @@ function countAffection(type) {
         : "Sending you another warm hug... 🫂";
 
     if (hugClicks === 10) {
+      document.getElementById("cardFeedback").textContent =
+        "10 warm hugs for you! ❤️";
+
       showNextButton();
     }
 
   } else {
 
-    kissClicks = Math.min(kissClicks + 1, 10);
+    kissClicks = Math.min(kissClicks+1,10);
+
+    document.body.classList.add("affection-theme","kiss-theme");
 
     document.getElementById("kissProgress").textContent =
       kissClicks + " / 10 kisses";
@@ -1562,87 +1480,140 @@ function countAffection(type) {
         : "One more kiss for you... 💋";
 
     if (kissClicks === 10) {
+      document.getElementById("cardFeedback").textContent =
+        "10 kisses for you, my love! 💋";
+
       showNextButton();
     }
+  }
+}
+
+// CARD 8: SELECT EMOJIS
+
+function toggleEmoji(button,emoji) {
+
+  if (selectedEmojis.includes(emoji)) {
+
+    selectedEmojis = selectedEmojis.filter(e => e !== emoji);
+    button.classList.remove("selected");
+
+  } else {
+
+    selectedEmojis.push(emoji);
+    button.classList.add("selected");
 
   }
 
+  document.getElementById("emojiCount").textContent =
+    "Selected: " + selectedEmojis.length;
+}
+
+function submitEmojis() {
+
+  if (selectedEmojis.length === 0) {
+
+    document.getElementById("cardFeedback").textContent =
+      "Choose at least one emoji, baby! ❤️";
+
+    return;
+  }
+
+  document.getElementById("cardFeedback").textContent =
+    "Your chosen emojis: " + selectedEmojis.join(" ");
+
+  showNextButton();
+}
+
+// CARD 10: FREE MESSAGE
+
+function submitPersonalMessage() {
+
+  const message = document.getElementById("personalMessage")
+    .value.trim();
+
+  if (!message) {
+
+    document.getElementById("cardFeedback").textContent =
+      "Please write something for me, baby. ❤️";
+
+    return;
+  }
+
+  document.getElementById("cardFeedback").textContent =
+    "I received your sweet message! Thank you, Babyy. ❤️";
+
+  showNextButton();
 }
 
 // ====================================
-// NEXT CARD - FIXED 1 TO 10 SEQUENCE
+// NEXT CARD - FIXED ORDER
 // ====================================
 
 function nextCard() {
 
   currentCardIndex++;
 
-  if (currentCardIndex >= 10) {
+  if (currentCardIndex >= cardTypes.length) {
 
     showCardFinish();
-
     return;
   }
+
+  document.body.classList.remove("affection-theme","kiss-theme");
 
   renderCard();
 
   document.getElementById("cardsPage").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+    behavior:"smooth",
+    block:"start"
   });
-
 }
 
 // ====================================
-// FINISH ALL 10 CARDS
+// FINAL SURPRISE AFTER ALL 10 CARDS
 // ====================================
 
 function showCardFinish() {
 
-  document.getElementById("cardProgress").textContent =
-    "10 / 10 COMPLETED!";
+  showPage("finalPage");
 
-  document.getElementById("challengeTitle").textContent =
-    "You finished all 10 cards, my Babyy! ❤️";
-
-  document.getElementById("challengeBody").innerHTML = `
-
-    <p>Thank you for answering all my little questions.</p>
-
-    <p>
-      I hope these made you smile.
-      You deserve all the love in the world. 🥰
-    </p>
-
-    <p style="font-size:30px;">
-      ❤️💗💋🫂
-    </p>
-
-    <p>I love you so much, Lissa ko!</p>
-
-    <button onclick="backToSurprise()">
-      Back to Our Little World 💗
-    </button>
-
-  `;
-
-  document.getElementById("cardFeedback").textContent =
-    "Forever yours. ❤️";
-
-  document.getElementById("nextCardBtn")
-    .classList.add("hidden");
-
+  document.getElementById("finalQuestion").classList.remove("hidden");
+  document.getElementById("giftIntroduction").classList.add("hidden");
+  document.getElementById("giftReveal").classList.add("hidden");
+  document.getElementById("giftClaimed").classList.add("hidden");
 }
 
-function backToSurprise() {
+function finalYes() {
 
-  hideAll();
+  document.getElementById("finalQuestion").classList.add("hidden");
 
-  document.getElementById("surprise")
-    .classList.remove("hidden");
+  document.getElementById("giftIntroduction").classList.remove("hidden");
+}
 
-  updateVisitedStatus();
+function showGift() {
 
+  document.getElementById("giftIntroduction").classList.add("hidden");
+
+  document.getElementById("giftReveal").classList.remove("hidden");
+
+  const gift = document.getElementById("giftImage");
+
+  gift.onerror = function() {
+    document.getElementById("giftReveal").insertAdjacentHTML(
+      "beforeend",
+      '<p>Please upload your gift picture as gift.jpg to GitHub.</p>'
+    );
+    gift.style.display = "none";
+  };
+}
+
+function claimGift() {
+
+  document.getElementById("giftReveal").classList.add("hidden");
+
+  document.getElementById("giftClaimed").classList.remove("hidden");
+
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
 </script>
