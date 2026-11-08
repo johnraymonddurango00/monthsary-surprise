@@ -43,7 +43,7 @@ button {
 
 button:hover { background: #c92d69; }
 
-.hidden { display: none; }
+.hidden { display: none !important; }
 
 #gameCanvas {
   width: 100%;
@@ -94,9 +94,83 @@ input {
   margin-top: 8px;
 }
 
+/* MUSIC PLAYER */
+#music {
+  margin-top: 25px;
+  padding: 15px;
+  background: #fff0f5;
+  border-radius: 18px;
+}
+
+#ourSong {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* LOVE LETTER */
+#letter {
+  margin-top: 25px;
+  padding: 20px;
+  background: linear-gradient(135deg, #fff0f5, #ffe0ec);
+  border: 1px solid #ffc0d5;
+  border-radius: 18px;
+  text-align: left;
+  animation: fadeIn 1.2s ease;
+}
+
+#letter h2 {
+  text-align: center;
+}
+
 #message {
-  line-height: 1.8;
-  white-space: pre-line;
+  line-height: 1.9;
+  white-space: normal;
+  font-size: 15px;
+}
+
+#message p {
+  margin-bottom: 18px;
+}
+
+#message ul {
+  padding-left: 23px;
+}
+
+#message li {
+  margin-bottom: 12px;
+}
+
+.signature {
+  text-align: center;
+  color: #d6336c;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 25px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    padding: 22px 14px;
+  }
+
+  .gallery img {
+    height: 145px;
+  }
+
+  #message {
+    font-size: 14px;
+  }
 }
 </style>
 </head>
@@ -154,6 +228,7 @@ input {
 
 <!-- SURPRISE MENU -->
 <section class="container hidden" id="surprise">
+
   <h1>Welcome, my Babyy! 💗</h1>
   <p>You unlocked my little world!</p>
 
@@ -175,17 +250,34 @@ input {
 
   <!-- MUSIC -->
   <div id="music" class="hidden">
+
     <h2>Our Song 🎵</h2>
     <p>A song that reminds me of you.</p>
 
-    <audio controls style="width:100%">
-      <source src="song.mp3" type="audio/mpeg">
-      Your browser does not support audio.
+    <audio id="ourSong"
+           controls
+           preload="metadata"
+           style="width:100%; max-width:400px;">
+
+      <source src="./song.mp3" type="audio/mpeg">
+
+      Your browser does not support HTML5 audio.
+
     </audio>
+
+    <p style="font-size:12px;">
+      Play our song and enjoy this little moment. ❤️
+    </p>
+
+    <button onclick="hideSections()">
+      Back to Menu 💗
+    </button>
+
   </div>
 
   <!-- 10 PHOTOS -->
   <div id="photos" class="hidden">
+
     <h2>Our Memories 📸</h2>
 
     <div class="gallery">
@@ -200,22 +292,117 @@ input {
       <img src="photo9.jpg" alt="Memory 9">
       <img src="photo10.jpg" alt="Memory 10">
     </div>
+
+    <button onclick="hideSections()">
+      Back to Menu 💗
+    </button>
+
   </div>
 
   <!-- SWEET MESSAGE -->
   <div id="letter" class="hidden">
-    <h2>To My Babyy ❤️</h2>
 
-    <p id="message">
-Happy Monthsary, my lovee!
+    <h2>To My Babyy Lissa ❤️</h2>
 
-Thank you for being part of my life.
-You make my ordinary days special.
-I hope we continue making beautiful
-memories together.
+    <div id="message">
 
-I love you so much, Babyy! ❤️
-    </p>
+      <p>
+        Babyy, thank you dahil dumating ka sa buhay ko. 🥺❤️
+      </p>
+
+      <p>
+        Dahil sa'yo, ay muling nabuhay ang aking mundo.
+        Masaya ako dahil minamahal mo ako at pinipili mo ako
+        no matter how difficult our circumstances may be.
+        Napakasaya ko dahil tinanggap mo ako at hindi mo ako
+        pinabayaan. Ikaw ang isa sa mga dahilan kung bakit
+        patuloy akong nagbabago at nagiging mas mabuting tao.
+      </p>
+
+      <p>
+        Mas lalo pa kitang minamahal, mas naiintindihan,
+        mas nauunawaan, at mas gusto kong ipakita at
+        iparamdam sa'yo na ikaw ang kakampi ko sa buong
+        buhay ko. Gusto kong makasama ka forever.
+      </p>
+
+      <p>
+        Masaya na ako kapag nakikita kitang okay.
+      </p>
+
+      <p>
+        Masaya na ako kapag hindi ka nahihirapan.
+      </p>
+
+      <p>
+        Masaya na ako kapag masaya ka.
+      </p>
+
+      <p>
+        Masaya na ako dahil nandiyan ka.
+      </p>
+
+      <p>
+        Sapat na sa akin na nandiyan ka sa tabi ko.
+        You're enough for me because you're already
+        everything I could ever ask for.
+      </p>
+
+      <p>
+        Sa pitong buwan nating pagsasama, hindi tayo
+        sumuko sa mga pagsubok, hardships, paghihirap,
+        at sakit na naranasan natin. Nalagpasan natin
+        ang lahat ng iyon, at sa halip na mapagod sa
+        isa't isa, mas lalo pa nating piniling magmahalan.
+      </p>
+
+      <p>
+        Ayokong pabayaan ka, Babyy, dahil mahal na mahal kita.
+      </p>
+
+      <p>
+        Tandaan mo, Babyy, kapag nahihirapan ka sa buhay,
+        lagi mo akong maaasahang yayakap sa'yo at magsasabi
+        ng mga bagay na gusto kong lagi mong tandaan:
+      </p>
+
+      <ul>
+        <li>
+          I appreciate you and I'm thankful that you're
+          part of my life.
+        </li>
+
+        <li>
+          You're a worthwhile person because you continue
+          to survive every single day despite everything
+          you're going through.
+        </li>
+
+        <li>
+          I'm always, always proud of you because you
+          overcome challenges and never give up, even
+          when things get difficult.
+        </li>
+      </ul>
+
+      <p>
+        I hope you never forget how valuable you are,
+        Babyy. Hindi mo kailangang maging perfect para
+        mahalin kita. I will continue choosing you,
+        understanding you, supporting you, and loving
+        you through every season of our lives.
+      </p>
+
+      <p class="signature">
+        I love you so much, Babyy Lissa ko! 🥰❤️😘💋
+      </p>
+
+    </div>
+
+    <button onclick="hideSections()">
+      Back to Menu 💗
+    </button>
+
   </div>
 
 </section>
@@ -224,13 +411,17 @@ I love you so much, Babyy! ❤️
 
 // PAGE NAVIGATION
 function hideAll() {
+
   ["welcome", "game", "password", "surprise"]
-    .forEach(id =>
-      document.getElementById(id).classList.add("hidden")
-    );
+    .forEach(id => {
+      document.getElementById(id).classList.add("hidden");
+    });
+
+  hideSections();
 }
 
 function startGame() {
+
   hideAll();
 
   attempts = 0;
@@ -255,22 +446,28 @@ let attempts = 0;
 const ground = 165;
 
 function jump() {
+
   if (running && heart.y >= 144) {
     heart.vy = -390;
   }
+
 }
 
 // KEYBOARD CONTROLS
 document.addEventListener("keydown", function(e) {
+
   if (
     e.code === "Space" ||
     e.code === "ArrowUp"
   ) {
+
     if (!document.getElementById("game").classList.contains("hidden")) {
       e.preventDefault();
       jump();
     }
+
   }
+
 });
 
 // MOBILE TAP CONTROL
@@ -299,6 +496,7 @@ function restartGame() {
     .classList.add("hidden");
 
   requestAnimationFrame(gameLoop);
+
 }
 
 // GAME LOOP
@@ -352,7 +550,7 @@ function gameLoop(time) {
   ctx.fillText("❤️", heart.x, heart.y + 25);
 
   // OBSTACLES
-  obstacles.forEach(ob => {
+  for (const ob of obstacles) {
 
     ctx.font = "30px Arial";
     ctx.fillText("🌵", ob.x, ground + 15);
@@ -363,9 +561,10 @@ function gameLoop(time) {
       heart.y > 112
     ) {
       endGame();
+      return;
     }
 
-  });
+  }
 
   // SCORE
   document.getElementById("score").textContent =
@@ -378,7 +577,7 @@ function gameLoop(time) {
     running = false;
 
     document.getElementById("gameStatus").textContent =
-      "You complete the game my Babyy ❤️";
+      "You completed the game, my Babyy! ❤️";
 
     setTimeout(() => {
 
@@ -395,6 +594,7 @@ function gameLoop(time) {
   if (running) {
     requestAnimationFrame(gameLoop);
   }
+
 }
 
 // GAME OVER AND ATTEMPT COUNTER
@@ -485,8 +685,14 @@ function showMessage() {
 
 }
 
-// HIDE SURPRISE SECTIONS
+// HIDE SURPRISE SECTIONS AND PAUSE MUSIC
 function hideSections() {
+
+  const song = document.getElementById("ourSong");
+
+  if (song) {
+    song.pause();
+  }
 
   ["music", "photos", "letter"].forEach(id => {
 
