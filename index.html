@@ -9,14 +9,26 @@
 <style>
 * { box-sizing: border-box; }
 
+:root {
+  --pink: #e94d87;
+  --dark-pink: #d6336c;
+  --soft-pink: #fff0f5;
+  --text-pink: #a83260;
+}
+
 body {
   margin: 0;
   font-family: Georgia, serif;
   background: linear-gradient(135deg, #ffe0ec, #fff5f8);
-  color: #a83260;
+  color: var(--text-pink);
   text-align: center;
   min-height: 100vh;
   padding: 25px 15px;
+  transition: background 1.2s ease, color 1.2s ease;
+}
+
+body.affection-theme {
+  background: linear-gradient(135deg, #ffd6e7, #ffe9f1, #fff0f5);
 }
 
 .container {
@@ -28,10 +40,10 @@ body {
   box-shadow: 0 8px 25px #d77b9b33;
 }
 
-h1, h2 { color: #d6336c; }
+h1, h2 { color: var(--dark-pink); }
 
 button {
-  background: #e94d87;
+  background: var(--pink);
   color: white;
   border: none;
   padding: 13px 25px;
@@ -39,11 +51,49 @@ button {
   font-size: 16px;
   cursor: pointer;
   margin: 8px;
+  transition: transform .2s ease, opacity .2s ease, background .2s ease;
 }
 
-button:hover { background: #c92d69; }
+button:hover:not(:disabled) {
+  background: #c92d69;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
 
 .hidden { display: none !important; }
+
+#countdown {
+  font-size: clamp(32px, 9vw, 48px);
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: var(--dark-pink);
+  margin: 18px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-note {
+  background: #fff0f5;
+  border: 1px solid #ffc0d5;
+  border-radius: 16px;
+  padding: 14px;
+  margin: 18px 0;
+}
+
+.skip-countdown {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px dashed #f3a1bd;
+  border-radius: 16px;
+}
+
+.skip-countdown input {
+  max-width: 220px;
+  letter-spacing: 2px;
+}
 
 #gameCanvas {
   width: 100%;
@@ -54,14 +104,23 @@ button:hover { background: #c92d69; }
   touch-action: manipulation;
 }
 
-input {
+input, textarea {
   padding: 13px;
   border: 2px solid pink;
   border-radius: 10px;
   text-align: center;
-  font-size: 20px;
-  width: 190px;
-  letter-spacing: 5px;
+  font-size: 17px;
+  width: 100%;
+  max-width: 400px;
+  color: #a83260;
+  font-family: Georgia, serif;
+}
+
+textarea {
+  min-height: 95px;
+  resize: vertical;
+  text-align: left;
+  letter-spacing: normal;
 }
 
 .gallery {
@@ -86,6 +145,12 @@ input {
   border-radius: 18px;
   width: 100%;
   font-size: 28px;
+  margin: 0;
+  min-height: 125px;
+}
+
+.icon-button:hover:not(:disabled) {
+  background: #ffe0ec;
 }
 
 .icon-button span {
@@ -94,7 +159,6 @@ input {
   margin-top: 8px;
 }
 
-/* MUSIC PLAYER */
 #music {
   margin-top: 25px;
   padding: 15px;
@@ -107,7 +171,6 @@ input {
   max-width: 400px;
 }
 
-/* LOVE LETTER */
 #letter {
   margin-top: 25px;
   padding: 20px;
@@ -118,9 +181,7 @@ input {
   animation: fadeIn 1.2s ease;
 }
 
-#letter h2 {
-  text-align: center;
-}
+#letter h2 { text-align: center; }
 
 #message {
   line-height: 1.9;
@@ -128,17 +189,9 @@ input {
   font-size: 15px;
 }
 
-#message p {
-  margin-bottom: 18px;
-}
-
-#message ul {
-  padding-left: 23px;
-}
-
-#message li {
-  margin-bottom: 12px;
-}
+#message p { margin-bottom: 18px; }
+#message ul { padding-left: 23px; }
+#message li { margin-bottom: 12px; }
 
 .signature {
   text-align: center;
@@ -148,41 +201,152 @@ input {
   margin-top: 25px;
 }
 
+#unlockCardsBtn {
+  width: 100%;
+  margin-top: 22px;
+  background: #d6336c;
+}
+
+.visited-status {
+  background: #fff0f5;
+  border-radius: 14px;
+  padding: 12px;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+#challengeCard {
+  margin-top: 24px;
+  padding: 22px 16px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #fff4f8, #ffe5ef);
+  border: 1px solid #ffc0d5;
+  box-shadow: 0 8px 22px #d77b9b22;
+  animation: fadeIn .45s ease;
+}
+
+#challengeTitle {
+  font-size: 23px;
+  margin-top: 0;
+}
+
+#challengeBody {
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.choice-list {
+  display: grid;
+  gap: 10px;
+  max-width: 360px;
+  margin: 18px auto;
+}
+
+.choice-button {
+  background: white;
+  color: #a83260;
+  border: 2px solid #ffc0d5;
+  width: 100%;
+}
+
+.choice-button.selected {
+  background: #e94d87;
+  color: white;
+  border-color: #d6336c;
+}
+
+.color-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 7px;
+  padding: 10px 13px;
+  background: white;
+  border: 2px solid #ffc0d5;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.color-choice input {
+  width: auto;
+  accent-color: #e94d87;
+}
+
+#hugProgress, #kissProgress {
+  font-weight: bold;
+  color: #d6336c;
+  font-size: 20px;
+}
+
+#giftImage {
+  width: 100%;
+  max-width: 330px;
+  max-height: 350px;
+  object-fit: contain;
+  border-radius: 16px;
+  background: #fff0f5;
+  margin-top: 12px;
+}
+
+#cardFeedback {
+  min-height: 24px;
+  color: #c92d69;
+  font-weight: bold;
+}
+
+#nextCardBtn {
+  width: 100%;
+  max-width: 300px;
+  margin-top: 18px;
+}
+
+.progress-text {
+  color: #a83260;
+  font-size: 13px;
+}
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 400px) {
-  .container {
-    padding: 22px 14px;
-  }
-
-  .gallery img {
-    height: 145px;
-  }
-
-  #message {
-    font-size: 14px;
-  }
+  .container { padding: 22px 14px; }
+  .gallery img { height: 145px; }
+  #message { font-size: 14px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- FIRST PAGE -->
+<!-- FIRST PAGE: PHILIPPINE-TIME COUNTDOWN -->
 <section class="container" id="welcome">
+  <div class="countdown-note">
+    <h2>Our Surprise Opens At 💗</h2>
+    <p>November 9, 2026 · 7:00 PM</p>
+    <p>Philippine Time (UTC+8)</p>
+    <div id="countdown">00:00:00</div>
+    <p id="countdownStatus">Counting down to our special moment...</p>
+  </div>
+
   <h1>Hello, my lovee! ❤️</h1>
   <p>I have a little surprise for you, Babyy.</p>
   <p>Are you ready?</p>
-  <button onclick="startGame()">Click Me 💗</button>
+
+  <button id="startButton" onclick="startGame()" disabled>
+    Click Me 💗
+  </button>
+
+  <div class="skip-countdown">
+    <p><strong>Can't wait? You can skip the countdown. 💌</strong></p>
+    <input type="password" id="countdownPassword"
+           placeholder="Enter the special password"
+           autocomplete="off">
+    <br>
+    <button onclick="skipCountdown()">Skip Countdown</button>
+    <p id="countdownError" aria-live="polite"></p>
+  </div>
 </section>
 
 <!-- HEART RUNNER GAME -->
@@ -196,21 +360,18 @@ input {
   <canvas id="gameCanvas" width="500" height="200"></canvas>
 
   <p>Press SPACE, ↑, or tap the game to jump!</p>
-
   <p id="gameStatus">Your game is ready!</p>
 
-  <button id="restartBtn" class="hidden"
-          onclick="restartGame()">
+  <button id="restartBtn" class="hidden" onclick="restartGame()">
     Try Again ❤️
   </button>
 
-  <button id="skipBtn" class="hidden"
-          onclick="skipGame()">
+  <button id="skipBtn" class="hidden" onclick="skipGame()">
     Skip Game 💗
   </button>
 </section>
 
-<!-- SECRET CODE -->
+<!-- SECRET CODE AFTER GAME -->
 <section class="container hidden" id="password">
   <h2>One last thing, my Babyy! 💌</h2>
   <p>Enter our secret 8-digit code.</p>
@@ -220,20 +381,17 @@ input {
          placeholder="••••••••">
 
   <br><br>
-
   <button onclick="unlock()">Unlock ❤️</button>
-
-  <p id="error"></p>
+  <p id="error" aria-live="polite"></p>
 </section>
 
 <!-- SURPRISE MENU -->
 <section class="container hidden" id="surprise">
-
   <h1>Welcome, my Babyy! 💗</h1>
   <p>You unlocked my little world!</p>
+  <p>Visit all three surprises to unlock your 10 special cards. 🥰</p>
 
   <div class="gallery">
-
     <button class="icon-button" onclick="showMusic()">
       🎵 <span>Our Music</span>
     </button>
@@ -245,39 +403,36 @@ input {
     <button class="icon-button" onclick="showMessage()">
       💌 <span>Sweet Message</span>
     </button>
-
   </div>
+
+  <div class="visited-status" id="visitedStatus" aria-live="polite">
+    Visited: 0 / 3 surprises
+  </div>
+
+  <button id="unlockCardsBtn" class="hidden" onclick="beginCards()">
+    Open Your 10 Special Cards 💝
+  </button>
 
   <!-- MUSIC -->
   <div id="music" class="hidden">
-
     <h2>Our Song 🎵</h2>
     <p>A song that reminds me of you.</p>
 
-    <audio id="ourSong"
-           controls
-           preload="metadata"
+    <audio id="ourSong" controls preload="metadata"
            style="width:100%; max-width:400px;">
-
       <source src="./song.mp3" type="audio/mpeg">
-
       Your browser does not support HTML5 audio.
-
     </audio>
 
     <p style="font-size:12px;">
       Play our song and enjoy this little moment. ❤️
     </p>
 
-    <button onclick="hideSections()">
-      Back to Menu 💗
-    </button>
-
+    <button onclick="hideSections()">Back to Menu 💗</button>
   </div>
 
   <!-- 10 PHOTOS -->
   <div id="photos" class="hidden">
-
     <h2>Our Memories 📸</h2>
 
     <div class="gallery">
@@ -293,22 +448,15 @@ input {
       <img src="photo10.jpg" alt="Memory 10">
     </div>
 
-    <button onclick="hideSections()">
-      Back to Menu 💗
-    </button>
-
+    <button onclick="hideSections()">Back to Menu 💗</button>
   </div>
 
   <!-- SWEET MESSAGE -->
   <div id="letter" class="hidden">
-
     <h2>To My Babyy Lissa ❤️</h2>
 
     <div id="message">
-
-      <p>
-        Babyy, thank you dahil dumating ka sa buhay ko. 🥺❤️
-      </p>
+      <p>Babyy, thank you dahil dumating ka sa buhay ko. 🥺❤️</p>
 
       <p>
         Dahil sa'yo, ay muling nabuhay ang aking mundo.
@@ -326,21 +474,10 @@ input {
         buhay ko. Gusto kong makasama ka forever.
       </p>
 
-      <p>
-        Masaya na ako kapag nakikita kitang okay.
-      </p>
-
-      <p>
-        Masaya na ako kapag hindi ka nahihirapan.
-      </p>
-
-      <p>
-        Masaya na ako kapag masaya ka.
-      </p>
-
-      <p>
-        Masaya na ako dahil nandiyan ka.
-      </p>
+      <p>Masaya na ako kapag nakikita kitang okay.</p>
+      <p>Masaya na ako kapag hindi ka nahihirapan.</p>
+      <p>Masaya na ako kapag masaya ka.</p>
+      <p>Masaya na ako dahil nandiyan ka.</p>
 
       <p>
         Sapat na sa akin na nandiyan ka sa tabi ko.
@@ -356,9 +493,7 @@ input {
         isa't isa, mas lalo pa nating piniling magmahalan.
       </p>
 
-      <p>
-        Ayokong pabayaan ka, Babyy, dahil mahal na mahal kita.
-      </p>
+      <p>Ayokong pabayaan ka, Babyy, dahil mahal na mahal kita.</p>
 
       <p>
         Tandaan mo, Babyy, kapag nahihirapan ka sa buhay,
@@ -371,13 +506,11 @@ input {
           I appreciate you and I'm thankful that you're
           part of my life.
         </li>
-
         <li>
           You're a worthwhile person because you continue
           to survive every single day despite everything
           you're going through.
         </li>
-
         <li>
           I'm always, always proud of you because you
           overcome challenges and never give up, even
@@ -396,42 +529,122 @@ input {
       <p class="signature">
         I love you so much, Babyy Lissa ko! 🥰❤️😘💋
       </p>
-
     </div>
 
-    <button onclick="hideSections()">
-      Back to Menu 💗
-    </button>
-
+    <button onclick="hideSections()">Back to Menu 💗</button>
   </div>
+</section>
 
+<!-- RANDOM 10-CARD EXPERIENCE -->
+<section class="container hidden" id="cardsPage">
+  <h1>10 Little Things For You 💝</h1>
+  <p>Answer each one to reveal the next card, Babyy.</p>
+
+  <div id="challengeCard">
+    <p class="progress-text" id="cardProgress">Card 1 of 10</p>
+    <h2 id="challengeTitle"></h2>
+    <div id="challengeBody"></div>
+    <p id="cardFeedback" aria-live="polite"></p>
+
+    <button id="nextCardBtn" class="hidden" onclick="nextCard()">
+      Next Card 💗
+    </button>
+  </div>
 </section>
 
 <script>
 
-// PAGE NAVIGATION
-function hideAll() {
+// ------------------------------------
+// COUNTDOWN: NOVEMBER 9, 2026 AT 7 PM
+// PHILIPPINE TIME (UTC+8)
+// ------------------------------------
 
-  ["welcome", "game", "password", "surprise"]
-    .forEach(id => {
-      document.getElementById(id).classList.add("hidden");
-    });
+// 7:00 PM in the Philippines is 11:00 AM UTC.
+const targetTime = Date.UTC(2026, 10, 9, 11, 0, 0);
+let countdownTimer = null;
+
+function updateCountdown() {
+  const remaining = targetTime - Date.now();
+  const countdown = document.getElementById("countdown");
+  const startButton = document.getElementById("startButton");
+  const status = document.getElementById("countdownStatus");
+
+  if (remaining <= 0) {
+    countdown.textContent = "00:00:00";
+    status.textContent = "It's time, my Babyy! Your surprise is ready. ❤️";
+    startButton.disabled = false;
+
+    if (countdownTimer) {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+    }
+    return;
+  }
+
+  const totalSeconds = Math.floor(remaining / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  countdown.textContent =
+    String(hours).padStart(2, "0") + ":" +
+    String(minutes).padStart(2, "0") + ":" +
+    String(seconds).padStart(2, "0");
+
+  startButton.disabled = true;
+}
+
+function skipCountdown() {
+  const entered = document.getElementById("countdownPassword").value.trim();
+  const error = document.getElementById("countdownError");
+
+  if (entered.toLowerCase() === "myhusband") {
+    if (countdownTimer) {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+    }
+
+    document.getElementById("countdown").textContent = "SKIPPED 💗";
+    document.getElementById("countdownStatus").textContent =
+      "Countdown skipped. Your surprise is ready!";
+    document.getElementById("startButton").disabled = false;
+    error.textContent = "Correct password! You can click the button now. ❤️";
+    document.getElementById("countdownPassword").value = "";
+  } else {
+    error.textContent = "Wrong password, Babyy. Try again. 💗";
+  }
+}
+
+updateCountdown();
+countdownTimer = setInterval(updateCountdown, 1000);
+
+// ------------------------------------
+// PAGE NAVIGATION
+// ------------------------------------
+
+function hideAll() {
+  ["welcome", "game", "password", "surprise", "cardsPage"]
+    .forEach(id => document.getElementById(id).classList.add("hidden"));
 
   hideSections();
 }
 
 function startGame() {
+  if (Date.now() < targetTime &&
+      document.getElementById("countdown").textContent !== "SKIPPED 💗") {
+    return;
+  }
 
   hideAll();
-
   attempts = 0;
-
   document.getElementById("game").classList.remove("hidden");
-
   restartGame();
 }
 
+// ------------------------------------
 // HEART RUNNER GAME
+// ------------------------------------
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -446,36 +659,23 @@ let attempts = 0;
 const ground = 165;
 
 function jump() {
-
   if (running && heart.y >= 144) {
     heart.vy = -390;
   }
-
 }
 
-// KEYBOARD CONTROLS
 document.addEventListener("keydown", function(e) {
-
-  if (
-    e.code === "Space" ||
-    e.code === "ArrowUp"
-  ) {
-
+  if (e.code === "Space" || e.code === "ArrowUp") {
     if (!document.getElementById("game").classList.contains("hidden")) {
       e.preventDefault();
       jump();
     }
-
   }
-
 });
 
-// MOBILE TAP CONTROL
 canvas.addEventListener("pointerdown", jump);
 
-// RESTART GAME
 function restartGame() {
-
   heart = { x: 55, y: 145, vy: 0 };
   obstacles = [];
   score = 0;
@@ -483,34 +683,19 @@ function restartGame() {
   lastTime = 0;
   running = true;
 
-  document.getElementById("score").textContent =
-    "0000 / 0100";
-
-  document.getElementById("gameStatus").textContent =
-    "Good luck, my love!";
-
-  document.getElementById("restartBtn")
-    .classList.add("hidden");
-
-  document.getElementById("skipBtn")
-    .classList.add("hidden");
+  document.getElementById("score").textContent = "0000 / 0100";
+  document.getElementById("gameStatus").textContent = "Good luck, my love!";
+  document.getElementById("restartBtn").classList.add("hidden");
+  document.getElementById("skipBtn").classList.add("hidden");
 
   requestAnimationFrame(gameLoop);
-
 }
 
-// GAME LOOP
 function gameLoop(time) {
-
   if (!running) return;
 
-  const dt = Math.min(
-    (time - (lastTime || time)) / 1000,
-    0.04
-  );
-
+  const dt = Math.min((time - (lastTime || time)) / 1000, 0.04);
   lastTime = time;
-
   score += dt * 3.4;
 
   heart.vy += 1050 * dt;
@@ -528,30 +713,21 @@ function gameLoop(time) {
     obstacleTimer = 0;
   }
 
-  obstacles.forEach(ob => {
-    ob.x -= 230 * dt;
-  });
-
+  obstacles.forEach(ob => ob.x -= 230 * dt);
   obstacles = obstacles.filter(ob => ob.x > -30);
 
-  // DRAW GAME
   ctx.clearRect(0, 0, 500, 200);
-
   ctx.strokeStyle = "#e99ab5";
   ctx.lineWidth = 3;
-
   ctx.beginPath();
   ctx.moveTo(0, ground + 18);
   ctx.lineTo(500, ground + 18);
   ctx.stroke();
 
-  // HEART CHARACTER
   ctx.font = "32px Arial";
   ctx.fillText("❤️", heart.x, heart.y + 25);
 
-  // OBSTACLES
   for (const ob of obstacles) {
-
     ctx.font = "30px Arial";
     ctx.fillText("🌵", ob.x, ground + 15);
 
@@ -563,144 +739,439 @@ function gameLoop(time) {
       endGame();
       return;
     }
-
   }
 
-  // SCORE
   document.getElementById("score").textContent =
-    String(Math.floor(score)).padStart(4, "0") +
-    " / 0100";
+    String(Math.floor(score)).padStart(4, "0") + " / 0100";
 
-  // WINNING CONDITION
   if (score >= 100) {
-
     running = false;
-
     document.getElementById("gameStatus").textContent =
       "You completed the game, my Babyy! ❤️";
 
     setTimeout(() => {
-
       hideAll();
-
-      document.getElementById("password")
-        .classList.remove("hidden");
-
+      document.getElementById("password").classList.remove("hidden");
     }, 1800);
-
     return;
   }
 
-  if (running) {
-    requestAnimationFrame(gameLoop);
-  }
-
+  if (running) requestAnimationFrame(gameLoop);
 }
 
-// GAME OVER AND ATTEMPT COUNTER
 function endGame() {
-
   running = false;
   attempts++;
 
   document.getElementById("gameStatus").textContent =
     "Oops! Try again, my love! ❤️";
-
-  document.getElementById("restartBtn")
-    .classList.remove("hidden");
+  document.getElementById("restartBtn").classList.remove("hidden");
 
   if (attempts >= 3) {
-
     document.getElementById("gameStatus").textContent =
       "You've tried 3 times, my Babyy! 💗";
-
-    document.getElementById("skipBtn")
-      .classList.remove("hidden");
-
+    document.getElementById("skipBtn").classList.remove("hidden");
   }
-
 }
 
-// SKIP GAME AFTER 3 FAILURES
 function skipGame() {
-
   running = false;
-
   hideAll();
-
-  document.getElementById("password")
-    .classList.remove("hidden");
-
+  document.getElementById("password").classList.remove("hidden");
 }
 
-// SECRET PASSWORD
-function unlock() {
+// ------------------------------------
+// SECRET PASSWORD AFTER GAME
+// ------------------------------------
 
-  const code =
-    document.getElementById("secret").value;
+function unlock() {
+  const code = document.getElementById("secret").value;
 
   if (code === "04092026") {
-
     hideAll();
-
-    document.getElementById("surprise")
-      .classList.remove("hidden");
-
+    document.getElementById("surprise").classList.remove("hidden");
     document.getElementById("error").textContent = "";
-
+    updateVisitedStatus();
   } else {
-
     document.getElementById("error").textContent =
       "Wrong code, Babyy! Try again. 💗";
-
   }
-
 }
 
-// THREE SURPRISE ICONS
+// ------------------------------------
+// THREE UNIQUE SURPRISE ICONS
+// Each icon counts only once.
+// ------------------------------------
+
+const visitedSections = new Set();
+
+function markVisited(section) {
+  visitedSections.add(section);
+  updateVisitedStatus();
+}
+
+function updateVisitedStatus() {
+  const names = ["music", "photos", "letter"];
+  const count = names.filter(name => visitedSections.has(name)).length;
+
+  document.getElementById("visitedStatus").textContent =
+    "Visited: " + count + " / 3 surprises" +
+    (count === 3 ? " — You unlocked the cards! 💝" : "");
+
+  document.getElementById("unlockCardsBtn")
+    .classList.toggle("hidden", count !== 3);
+}
+
 function showMusic() {
-
+  markVisited("music");
   hideSections();
-
-  document.getElementById("music")
-    .classList.remove("hidden");
-
+  document.getElementById("music").classList.remove("hidden");
 }
 
 function showPhotos() {
-
+  markVisited("photos");
   hideSections();
-
-  document.getElementById("photos")
-    .classList.remove("hidden");
-
+  document.getElementById("photos").classList.remove("hidden");
 }
 
 function showMessage() {
-
+  markVisited("letter");
   hideSections();
-
-  document.getElementById("letter")
-    .classList.remove("hidden");
-
+  document.getElementById("letter").classList.remove("hidden");
 }
 
-// HIDE SURPRISE SECTIONS AND PAUSE MUSIC
 function hideSections() {
-
   const song = document.getElementById("ourSong");
-
-  if (song) {
-    song.pause();
-  }
+  if (song) song.pause();
 
   ["music", "photos", "letter"].forEach(id => {
-
-    document.getElementById(id)
-      .classList.add("hidden");
-
+    document.getElementById(id).classList.add("hidden");
   });
+}
 
+// ------------------------------------
+// RANDOMIZED 10 SPECIAL CARDS
+// ------------------------------------
+
+const cardTypes = [
+  "happiness",
+  "handsome",
+  "hiddenMessage",
+  "colors",
+  "loveWord",
+  "hug",
+  "kiss",
+  "ready",
+  "sure",
+  "gift"
+];
+
+let cardOrder = [];
+let currentCardIndex = 0;
+let hugClicks = 0;
+let kissClicks = 0;
+let selectedColors = [];
+
+function shuffle(array) {
+  const copy = [...array];
+
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  return copy;
+}
+
+function beginCards() {
+  if (visitedSections.size !== 3) return;
+
+  hideAll();
+  document.getElementById("cardsPage").classList.remove("hidden");
+
+  cardOrder = shuffle(cardTypes);
+  currentCardIndex = 0;
+  hugClicks = 0;
+  kissClicks = 0;
+  selectedColors = [];
+
+  renderCard();
+}
+
+function renderCard() {
+  const type = cardOrder[currentCardIndex];
+  const title = document.getElementById("challengeTitle");
+  const body = document.getElementById("challengeBody");
+  const feedback = document.getElementById("cardFeedback");
+  const next = document.getElementById("nextCardBtn");
+
+  document.getElementById("cardProgress").textContent =
+    "Card " + (currentCardIndex + 1) + " of 10";
+
+  feedback.textContent = "";
+  next.classList.add("hidden");
+  body.innerHTML = "";
+
+  switch (type) {
+
+    case "happiness":
+      title.textContent = "In scale of 1–10, gaano ka kasaya? 🥰";
+      body.innerHTML = `
+        <p>Tell me anything, Babyy. I want to know how you feel. ❤️</p>
+        <textarea id="happinessAnswer" maxlength="500"
+          placeholder="Your answer..."></textarea>
+        <button onclick="completeTextCard('happinessAnswer')">Submit Answer 💗</button>
+      `;
+      break;
+
+    case "handsome":
+      title.textContent = "Pogi ba ako? 😎";
+      body.innerHTML = `
+        <div class="choice-list">
+          <button class="choice-button" onclick="chooseOne(this, 'handsome')">Yes ❤️</button>
+          <button class="choice-button" onclick="chooseOne(this, 'handsome')">No 😂</button>
+        </div>
+      `;
+      break;
+
+    case "hiddenMessage":
+      title.textContent = "Para sa'yo ito, click mo ako baby hehe 💌";
+      body.innerHTML = `
+        <button onclick="revealHiddenMessage()">Click to reveal your message 💗</button>
+        <p id="hiddenLoveMessage" class="hidden"
+          style="font-size:21px; color:#d6336c; font-weight:bold;">
+          You're My beautiful Babyy wifeyy lissa 😍😍😍😍😍😍😍😍
+        </p>
+      `;
+      break;
+
+    case "colors":
+      title.textContent = "Choose 2 colours you want! 🎨";
+      body.innerHTML = `
+        <p>You can select exactly two colours.</p>
+        <div>
+          <label class="color-choice"><input type="checkbox" value="Green" onchange="toggleColor(this)"> Green 💚</label>
+          <label class="color-choice"><input type="checkbox" value="Pink" onchange="toggleColor(this)"> Pink 💗</label>
+          <label class="color-choice"><input type="checkbox" value="Blue" onchange="toggleColor(this)"> Blue 💙</label>
+          <label class="color-choice"><input type="checkbox" value="Red" onchange="toggleColor(this)"> Red ❤️</label>
+        </div>
+        <p id="colorCount">0 / 2 selected</p>
+      `;
+      break;
+
+    case "loveWord":
+      title.textContent = "Solve this: I ____ you so much 💗";
+      body.innerHTML = `
+        <p>Type the missing word using letters, not numbers.</p>
+        <input id="loveWordAnswer" type="text" maxlength="20"
+          placeholder="Your answer" style="letter-spacing:normal;">
+        <br>
+        <button onclick="checkLoveWord()">Submit Answer ❤️</button>
+      `;
+      break;
+
+    case "hug":
+      hugClicks = 0;
+      title.textContent = "Click me, we will hug together 🫂";
+      body.innerHTML = `
+        <p>Give me 10 hugs, Babyy!</p>
+        <button style="font-size:30px;" onclick="countAffection('hug')">🫂🫂🫂</button>
+        <p id="hugProgress">0 / 10 hugs</p>
+        <p id="hugNote">Every click makes our page warmer. ❤️</p>
+      `;
+      break;
+
+    case "kiss":
+      kissClicks = 0;
+      title.textContent = "Click me, we will kiss together 💋";
+      body.innerHTML = `
+        <p>Give me 10 kisses, Babyy!</p>
+        <button style="font-size:30px;" onclick="countAffection('kiss')">💋💋💋</button>
+        <p id="kissProgress">0 / 10 kisses</p>
+        <p id="kissNote">Sending you all my love. ❤️</p>
+      `;
+      break;
+
+    case "ready":
+      title.textContent = "Are you ready? 💝";
+      body.innerHTML = `
+        <div class="choice-list">
+          <button class="choice-button" onclick="chooseOne(this, 'ready')">Yes! 🥰</button>
+          <button class="choice-button" onclick="chooseOne(this, 'ready')">No 🙈</button>
+        </div>
+      `;
+      break;
+
+    case "sure":
+      title.textContent = "Are you sure? 👀";
+      body.innerHTML = `
+        <div class="choice-list">
+          <button class="choice-button" onclick="chooseOne(this, 'sure')">Yes! ❤️</button>
+          <button class="choice-button" onclick="chooseOne(this, 'sure')">No 😅</button>
+        </div>
+      `;
+      break;
+
+    case "gift":
+      title.textContent = "Here's your gift, come and claim it! 🎁";
+      body.innerHTML = `
+        <p>A little surprise made with love, just for you.</p>
+        <img id="giftImage" src="gift.jpg" alt="Your monthsary gift"
+          onerror="this.style.display='none'; document.getElementById('giftMissing').classList.remove('hidden');">
+        <p id="giftMissing" class="hidden">
+          Please upload your gift picture to GitHub and name it <strong>gift.jpg</strong>.
+        </p>
+        <p>I hope this makes you smile, my Babyy. ❤️</p>
+        <button onclick="completeCard()">I love my gift! 💗</button>
+      `;
+      break;
+  }
+}
+
+function showNextButton() {
+  document.getElementById("nextCardBtn").classList.remove("hidden");
+}
+
+function completeCard() {
+  showNextButton();
+}
+
+function completeTextCard(inputId) {
+  const field = document.getElementById(inputId);
+
+  if (!field || !field.value.trim()) {
+    document.getElementById("cardFeedback").textContent =
+      "Please write your answer first, Babyy. ❤️";
+    return;
+  }
+
+  document.getElementById("cardFeedback").textContent =
+    "Thank you for sharing with me. ❤️";
+  showNextButton();
+}
+
+function chooseOne(button, group) {
+  const buttons = button.parentElement.querySelectorAll("button");
+  buttons.forEach(item => item.classList.remove("selected"));
+  button.classList.add("selected");
+
+  document.getElementById("cardFeedback").textContent =
+    "Your answer: " + button.textContent;
+  showNextButton();
+}
+
+function revealHiddenMessage() {
+  document.getElementById("hiddenLoveMessage").classList.remove("hidden");
+  document.getElementById("cardFeedback").textContent =
+    "A message made just for you. ❤️";
+  showNextButton();
+}
+
+function toggleColor(checkbox) {
+  if (checkbox.checked && selectedColors.length >= 2) {
+    checkbox.checked = false;
+    document.getElementById("cardFeedback").textContent =
+      "Choose only two colours, Babyy. 💗";
+    return;
+  }
+
+  if (checkbox.checked) {
+    selectedColors.push(checkbox.value);
+  } else {
+    selectedColors = selectedColors.filter(color => color !== checkbox.value);
+  }
+
+  document.getElementById("colorCount").textContent =
+    selectedColors.length + " / 2 selected";
+
+  if (selectedColors.length === 2) {
+    document.getElementById("cardFeedback").textContent =
+      "You chose " + selectedColors.join(" and ") + "! 🎨";
+    showNextButton();
+  } else {
+    document.getElementById("nextCardBtn").classList.add("hidden");
+  }
+}
+
+function checkLoveWord() {
+  const answer = document.getElementById("loveWordAnswer").value.trim().toLowerCase();
+
+  if (answer === "love") {
+    document.getElementById("cardFeedback").textContent =
+      "Correct! I LOVE YOU TOO, BABYY! ❤️";
+    showNextButton();
+  } else {
+    document.getElementById("cardFeedback").textContent =
+      "Try again, Babyy. Hint: I ____ you so much. 💗";
+  }
+}
+
+function countAffection(type) {
+  document.body.classList.add("affection-theme");
+
+  if (type === "hug") {
+    hugClicks = Math.min(hugClicks + 1, 10);
+    document.getElementById("hugProgress").textContent =
+      hugClicks + " / 10 hugs";
+
+    document.getElementById("hugNote").textContent =
+      hugClicks === 10
+        ? "A big warm hug for you, my Babyy! 🫂❤️"
+        : "Sending you another warm hug... 🫂";
+
+    if (hugClicks === 10) showNextButton();
+
+  } else {
+    kissClicks = Math.min(kissClicks + 1, 10);
+    document.getElementById("kissProgress").textContent =
+      kissClicks + " / 10 kisses";
+
+    document.getElementById("kissNote").textContent =
+      kissClicks === 10
+        ? "10 kisses for my beautiful Babyy! 💋❤️"
+        : "One more kiss for you... 💋";
+
+    if (kissClicks === 10) showNextButton();
+  }
+}
+
+function nextCard() {
+  currentCardIndex++;
+
+  if (currentCardIndex >= cardOrder.length) {
+    showCardFinish();
+    return;
+  }
+
+  renderCard();
+  document.getElementById("cardsPage").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+function showCardFinish() {
+  document.getElementById("cardProgress").textContent = "All 10 cards completed!";
+  document.getElementById("challengeTitle").textContent =
+    "You finished all 10 cards, my Babyy! ❤️";
+
+  document.getElementById("challengeBody").innerHTML = `
+    <p>Thank you for answering all my little questions.</p>
+    <p>I hope these made you smile. You deserve all the love in the world. 🥰</p>
+    <p style="font-size:30px;">❤️💗💋🫂</p>
+    <button onclick="backToSurprise()">Back to Our Little World 💗</button>
+  `;
+
+  document.getElementById("cardFeedback").textContent =
+    "I love you so much, Lissa ko!";
+
+  document.getElementById("nextCardBtn").classList.add("hidden");
+}
+
+function backToSurprise() {
+  hideAll();
+  document.getElementById("surprise").classList.remove("hidden");
+  updateVisitedStatus();
 }
 
 </script>
